@@ -1,0 +1,29 @@
+go.property("disabled", false)
+go.property("can_spawn", true)
+
+local COLLISION_RESPONSE = hash("collision_response")
+
+function init(self)
+	self.can_spawn = true
+	self.spawn_cooldown = 0
+end
+
+function update(self, dt)
+	if self.disabled then
+		return
+	end
+	if self.can_spawn then
+		self.spawn_cooldown = self.spawn_cooldown - 1
+		if self.spawn_cooldown <= 0 then
+			msg.post("board", "spawn", { position = go.get_position() })
+			self.spawn_cooldown = 2
+		end
+	end
+	self.can_spawn = true
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == COLLISION_RESPONSE then
+		self.can_spawn = false
+	end
+end

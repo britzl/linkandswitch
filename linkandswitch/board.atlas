@@ -1,0 +1,18 @@
+images {
+  image: "/linkandswitch/assets/blue.png"
+}
+images {
+  image: "/linkandswitch/assets/green.png"
+}
+images {
+  image: "/linkandswitch/assets/orange.png"
+}
+images {
+  image: "/linkandswitch/assets/pink.png"
+}
+images {
+  image: "/linkandswitch/assets/yellow.png"
+}
+margin: 0
+extrude_borders: 1
+inner_padding: 0
