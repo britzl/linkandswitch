@@ -1,24 +1,23 @@
 go.property("color", hash("blue"))
 go.property("falling", false)
 go.property("board", msg.url())
-go.property("left", hash(""))
-go.property("right", hash(""))
-go.property("up", hash(""))
-go.property("down", hash(""))
+go.property("left", hash("")) -- id of the block to the left of this block
+go.property("right", hash("")) -- id of the block to the right of this block
+go.property("up", hash("")) -- id of the block above this block
+go.property("down", hash("")) -- id of the block below this block
 
 local COLLISION_RESPONSE = hash("collision_response")
 local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 local SELECT = hash("select")
 local DESELECT = hash("deselect")
-local DELETED_LEFT = hash("deleted_left")
-local DELETED_RIGHT = hash("deleted_right")
-local DELETED_UP = hash("deleted_up")
-local DELETED_DOWN = hash("deleted_down")
+local DELETED_LEFT = hash("deleted_left") -- posted when a neighbouring block is deleted
+local DELETED_RIGHT = hash("deleted_right") -- posted when a neighbouring block is deleted
+local DELETED_UP = hash("deleted_up") -- posted when a neighbouring block is deleted
+local DELETED_DOWN = hash("deleted_down") -- posted when a neighbouring block is deleted
 local PAUSE = hash("pause")
 local RESUME = hash("resume")
 
 local GROUP_BLOCK_ABOVE = hash("block_above")
-local GROUP_BLOCK_BELOW = hash("block_below")
 local GROUP_GROUND = hash("ground")
 local GROUP_LEFT = hash("left")
 local GROUP_RIGHT = hash("right")
@@ -34,18 +33,10 @@ end
 
 function final(self)
 	msg.post(self.board, "deleted")
-	if self.left ~= EMPTY_HASH then
-		msg.post(self.left, DELETED_RIGHT)
-	end
-	if self.right ~= EMPTY_HASH then
-		msg.post(self.right, DELETED_LEFT)
-	end
-	if self.up ~= EMPTY_HASH then
-		msg.post(self.up, DELETED_DOWN)
-	end
-	if self.down ~= EMPTY_HASH then
-		msg.post(self.down, DELETED_UP)
-	end
+	if self.left ~= EMPTY_HASH then msg.post(self.left, DELETED_RIGHT) end
+	if self.right ~= EMPTY_HASH then msg.post(self.right, DELETED_LEFT) end
+	if self.up ~= EMPTY_HASH then msg.post(self.up, DELETED_DOWN) end
+	if self.down ~= EMPTY_HASH then msg.post(self.down, DELETED_UP) end
 end
 
 function update(self, dt)
