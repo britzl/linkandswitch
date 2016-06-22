@@ -1,0 +1,34 @@
+[project]
+title = Link and Switch
+version = 0.1
+
+[bootstrap]
+main_collection = /menu/menu.collectionc
+
+[input]
+game_binding = /input/game.input_bindingc
+
+[display]
+width = 640
+height = 1136
+
+[physics]
+scale = 0.02
+max_collisions = 256
+debug = 0
+
+[script]
+shared_state = 1
+
+[ios]
+bundle_identifier = con.britzl.linkandswitch
+
+[android]
+package = con.britzl.linkandswitch
+
+[osx]
+bundle_identifier = con.britzl.linkandswitch
+
+[graphics]
+max_debug_vertices = 50000
+

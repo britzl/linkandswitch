@@ -1,6 +1,0 @@
-images {
-  image: "/menu/assets/green_button08.png"
-}
-margin: 0
-extrude_borders: 1
-inner_padding: 0
