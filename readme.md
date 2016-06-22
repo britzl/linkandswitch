@@ -13,3 +13,5 @@ The blocks also have a central collision component that is used to detect touch 
 Finally the blocks have four small collision components above, below, left and right of the block to detect neighboring blocks. Each block has a property per cardinal direction to hold the id of neighboring blocks and these properties will be updated when collisions with neighboring blocks occur. This information is used in the switcher to detect groups of blocks in the same color.
 
 <img src="readme_block_collision_objects.png" width="600"/>
+
+[Play the game in your browser](https://britzl.github.io/linkandswitch/)
