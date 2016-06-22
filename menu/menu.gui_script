@@ -1,0 +1,35 @@
+local LINKER_PROXY = "#linkerproxy"
+local SWITCHER_PROXY = "#switcherproxy"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	gui.set_enabled(gui.get_node("back/bg"), false)
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action.released and gui.pick_node(gui.get_node("linker/bg"), action.x, action.y) then
+		self.current_proxy = LINKER_PROXY
+		msg.post(self.current_proxy, "load")
+	elseif action.released and gui.pick_node(gui.get_node("switcher/bg"), action.x, action.y) then
+		self.current_proxy = SWITCHER_PROXY
+		msg.post(self.current_proxy, "load")
+	elseif action.released and gui.pick_node(gui.get_node("back/bg"), action.x, action.y) then
+		msg.post(self.current_proxy, "unload")
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "enable")
+		gui.set_enabled(gui.get_node("buttons"), false)
+		gui.set_enabled(gui.get_node("back/bg"), true)
+	elseif message_id == hash("proxy_unloaded") then
+		gui.set_enabled(gui.get_node("buttons"), true)
+		gui.set_enabled(gui.get_node("back/bg"), false)
+		self.current_proxy = nil
+	end
+end

@@ -13,6 +13,9 @@ images {
 images {
   image: "/linkandswitch/assets/yellow.png"
 }
+images {
+  image: "/linkandswitch/assets/bg_start_820x1200.png"
+}
 margin: 0
 extrude_borders: 1
 inner_padding: 0

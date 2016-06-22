@@ -82,6 +82,9 @@ function on_input(self, action_id, action)
 				self.switching = false
 				self.linker.remove_all()
 			end)
+		else
+			self.linker.remove_all()
+			self.switching = false
 		end
 	end
 end
