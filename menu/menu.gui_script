@@ -4,6 +4,9 @@ local SWITCHER_PROXY = "#switcherproxy"
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	gui.set_enabled(gui.get_node("back/bg"), false)
+	self.linker_button = gui.get_node("linker/bg")
+	self.switcher_button = gui.get_node("switcher/bg")
+	self.back_button = gui.get_node("back/bg")
 end
 
 function final(self)
@@ -11,13 +14,17 @@ function final(self)
 end
 
 function on_input(self, action_id, action)
-	if action.released and gui.pick_node(gui.get_node("linker/bg"), action.x, action.y) then
-		self.current_proxy = LINKER_PROXY
-		msg.post(self.current_proxy, "load")
-	elseif action.released and gui.pick_node(gui.get_node("switcher/bg"), action.x, action.y) then
-		self.current_proxy = SWITCHER_PROXY
-		msg.post(self.current_proxy, "load")
-	elseif action.released and gui.pick_node(gui.get_node("back/bg"), action.x, action.y) then
+	if action.released and gui.pick_node(self.linker_button, action.x, action.y) then
+		if gui.is_enabled(self.linker_button) then
+			self.current_proxy = LINKER_PROXY
+			msg.post(self.current_proxy, "load")
+		end
+	elseif action.released and gui.pick_node(self.switcher_button, action.x, action.y) then
+		if gui.is_enabled(self.switcher_button) then
+			self.current_proxy = SWITCHER_PROXY
+			msg.post(self.current_proxy, "load")
+		end
+	elseif action.released and gui.pick_node(self.back_button, action.x, action.y) then
 		msg.post(self.current_proxy, "unload")
 	end
 end
@@ -25,11 +32,13 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then
 		msg.post(sender, "enable")
-		gui.set_enabled(gui.get_node("buttons"), false)
-		gui.set_enabled(gui.get_node("back/bg"), true)
+		gui.set_enabled(self.linker_button, false)
+		gui.set_enabled(self.switcher_button, false)
+		gui.set_enabled(self.back_button, true)
 	elseif message_id == hash("proxy_unloaded") then
-		gui.set_enabled(gui.get_node("buttons"), true)
-		gui.set_enabled(gui.get_node("back/bg"), false)
+		gui.set_enabled(self.linker_button, true)
+		gui.set_enabled(self.switcher_button, true)
+		gui.set_enabled(self.back_button, false)
 		self.current_proxy = nil
 	end
 end
